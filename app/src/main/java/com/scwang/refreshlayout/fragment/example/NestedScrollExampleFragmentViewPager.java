@@ -23,7 +23,6 @@ import com.scwang.refreshlayout.adapter.BaseRecyclerAdapter;
 import com.scwang.refreshlayout.adapter.SmartViewHolder;
 import com.scwang.smartrefresh.header.PhoenixHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.util.Arrays;
@@ -114,6 +113,7 @@ public class NestedScrollExampleFragmentViewPager extends Fragment {
             refreshLayout.setRefreshHeader(new PhoenixHeader(inflater.getContext()));
             refreshLayout.setRefreshContent(mRecyclerView = new RecyclerView(inflater.getContext()));
             refreshLayout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);
+            refreshLayout.setEnableLoadMore(false);
             return refreshLayout.getLayout();
         }
 

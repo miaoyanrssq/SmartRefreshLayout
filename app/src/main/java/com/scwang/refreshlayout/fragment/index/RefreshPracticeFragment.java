@@ -40,7 +40,7 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
  * 实战演示
  * A simple {@link Fragment} subclass.
  */
-public class RefreshPractiveFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class RefreshPracticeFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private enum Item {
         Repast(R.string.index_practice_repast, RepastPracticeActivity.class),

@@ -408,6 +408,12 @@ public interface RefreshLayout {
     RefreshLayout finishLoadMoreWithNoMoreData();
 
     /**
+     * 关闭 Header 或者 Footer
+     * @return RefreshLayout
+     */
+    RefreshLayout closeHeaderOrFooter();
+
+    /**
      * 恢复没有更多数据的原始状态
      * @param noMoreData 是否有更多数据
      * @return RefreshLayout
@@ -446,12 +452,12 @@ public interface RefreshLayout {
      */
     boolean autoRefresh();
 
-//    /**
-//     * 自动刷新
-//     * @param delayed 开始延时
-//     * @return RefreshLayout
-//     */
-//    boolean autoRefresh(int delayed);
+    /**
+     * 自动刷新
+     * @param delayed 开始延时
+     * @return RefreshLayout
+     */
+    boolean autoRefresh(int delayed);
 
     /**
      * 自动刷新
@@ -468,12 +474,12 @@ public interface RefreshLayout {
      */
     boolean autoLoadMore();
 
-//    /**
-//     * 自动加载
-//     * @param delayed 开始延时
-//     * @return RefreshLayout
-//     */
-//    boolean autoLoadMore(int delayed);
+    /**
+     * 自动加载
+     * @param delayed 开始延时
+     * @return RefreshLayout
+     */
+    boolean autoLoadMore(int delayed);
 
     /**
      * 自动加载
@@ -484,15 +490,6 @@ public interface RefreshLayout {
      */
     boolean autoLoadMore(int delayed, int duration, float dragRate);
 
-    /**
-     * 是否启用下拉刷新
-     */
-    boolean isEnableRefresh();
-
-    /**
-     * 是否启用加载更多
-     */
-    boolean isEnableLoadMore();
 
 //    /**
 //     * 是否正在刷新
