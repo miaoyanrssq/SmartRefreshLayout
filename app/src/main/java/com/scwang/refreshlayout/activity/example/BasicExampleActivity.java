@@ -56,6 +56,7 @@ public class BasicExampleActivity extends AppCompatActivity {
                 holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
             }
         });
+        mAdapter.refresh(initData());
         //todo SCROLL_STATE_IDLE
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             int SCROLL_STATE_IDLE = 0;
@@ -88,7 +89,7 @@ public class BasicExampleActivity extends AppCompatActivity {
                     public void run() {
                         mAdapter.refresh(initData());
                         refreshLayout.finishRefresh();
-                        refreshLayout.resetNoMoreData();//setNoMoreData(false);
+//                        refreshLayout.resetNoMoreData();//setNoMoreData(false);
                     }
                 }, 2000);
             }
@@ -113,6 +114,7 @@ public class BasicExampleActivity extends AppCompatActivity {
 
         //触发自动刷新
         refreshLayout.autoRefresh();
+//        refreshLayout.autoLoadMore();
         //item 点击测试
         mAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -144,6 +146,6 @@ public class BasicExampleActivity extends AppCompatActivity {
     }
 
     private Collection<Void> initData() {
-        return Arrays.asList(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+        return Arrays.asList(null,null,null,null);
     }
 }

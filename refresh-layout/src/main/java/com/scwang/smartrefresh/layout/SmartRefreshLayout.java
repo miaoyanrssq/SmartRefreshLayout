@@ -46,8 +46,8 @@ import com.scwang.smartrefresh.layout.api.ScrollBoundaryDecider;
 import com.scwang.smartrefresh.layout.constant.DimensionStatus;
 import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
-import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
-import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.impl.RefreshContentWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshFooterWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshHeaderWrapper;
@@ -410,7 +410,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                 if (sHeaderCreator != null) {
                     setRefreshHeader(sHeaderCreator.createRefreshHeader(thisView.getContext(), this));
                 } else {
-                    setRefreshHeader(new BezierRadarHeader(thisView.getContext()));
+                    setRefreshHeader(new ClassicsHeader(thisView.getContext()));
                 }
             }
             if (mRefreshFooter == null) {
@@ -418,7 +418,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                     setRefreshFooter(sFooterCreator.createRefreshFooter(thisView.getContext(), this));
                 } else {
                     boolean old = mEnableLoadMore;
-                    setRefreshFooter(new BallPulseFooter(thisView.getContext()));
+                    setRefreshFooter(new ClassicsFooter(thisView.getContext()));
                     mEnableLoadMore = old;
                 }
             } else {
@@ -1304,6 +1304,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             //onAnimationEnd 会改变状态为 Refreshing 必须在 onReleased 之后调用
             listener.onAnimationEnd(null);
         }
+
     }
 
     /**
