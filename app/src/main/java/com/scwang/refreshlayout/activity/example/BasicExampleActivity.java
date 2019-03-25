@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.scwang.refreshlayout.R;
@@ -38,7 +39,7 @@ public class BasicExampleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_example_basic);
 
-        final Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -46,7 +47,7 @@ public class BasicExampleActivity extends AppCompatActivity {
             }
         });
 
-        AbsListView listView = (AbsListView) findViewById(R.id.listView);
+        ListView listView = findViewById(R.id.listView);
         listView.setAdapter(mAdapter = new BaseRecyclerAdapter<Void>(simple_list_item_2) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Void model, int position) {
@@ -55,8 +56,29 @@ public class BasicExampleActivity extends AppCompatActivity {
                 holder.textColorId(android.R.id.text2, R.color.colorTextAssistant);
             }
         });
+        //todo SCROLL_STATE_IDLE
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            int SCROLL_STATE_IDLE = 0;
+            int SCROLL_STATE_TOUCH_SCROLL = 1;
+            int SCROLL_STATE_FLING = 2;
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    System.out.println("SCROLL_STATE_IDLE");
+                } else if (scrollState == SCROLL_STATE_TOUCH_SCROLL) {
+                    System.out.println("SCROLL_STATE_TOUCH_SCROLL");
+                } else if (scrollState == SCROLL_STATE_FLING) {
+                    System.out.println("SCROLL_STATE_FLING");
+                }
+            }
 
-        final RefreshLayout refreshLayout = (RefreshLayout) findViewById(R.id.refreshLayout);
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
+
+        final RefreshLayout refreshLayout = findViewById(R.id.refreshLayout);
         refreshLayout.setEnableAutoLoadMore(true);//开启自动加载功能（非必须）
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -66,7 +88,7 @@ public class BasicExampleActivity extends AppCompatActivity {
                     public void run() {
                         mAdapter.refresh(initData());
                         refreshLayout.finishRefresh();
-                        refreshLayout.setNoMoreData(false);
+                        refreshLayout.resetNoMoreData();//setNoMoreData(false);
                     }
                 }, 2000);
             }
@@ -97,7 +119,7 @@ public class BasicExampleActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 BottomSheetDialog dialog=new BottomSheetDialog(BasicExampleActivity.this);
                 View dialogView = View.inflate(getBaseContext(), R.layout.activity_example_basic, null);
-                RefreshLayout refreshLayout = (RefreshLayout) dialogView.findViewById(R.id.refreshLayout);
+                RefreshLayout refreshLayout = dialogView.findViewById(R.id.refreshLayout);
                 RecyclerView recyclerView = new RecyclerView(getBaseContext());
                 recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext()));
                 recyclerView.setAdapter(mAdapter);

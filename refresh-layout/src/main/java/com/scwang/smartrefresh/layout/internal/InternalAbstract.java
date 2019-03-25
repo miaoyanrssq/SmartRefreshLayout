@@ -19,6 +19,7 @@ import com.scwang.smartrefresh.layout.constant.RefreshState;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.impl.RefreshFooterWrapper;
 import com.scwang.smartrefresh.layout.impl.RefreshHeaderWrapper;
+import com.scwang.smartrefresh.layout.listener.OnStateChangedListener;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
@@ -42,6 +43,11 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
         super(wrappedView.getContext(), null, 0);
         this.mWrappedView = wrappedView;
         this.mWrappedInternal = wrappedInternal;
+        if (this instanceof RefreshFooterWrapper && mWrappedInternal instanceof RefreshHeader && mWrappedInternal.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
+            wrappedInternal.getView().setScaleY(-1);
+        } else if (this instanceof RefreshHeaderWrapper && mWrappedInternal instanceof RefreshFooter && mWrappedInternal.getSpinnerStyle() == SpinnerStyle.MatchLayout) {
+            wrappedInternal.getView().setScaleY(-1);
+        }
     }
 
     protected InternalAbstract(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -73,7 +79,7 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
         return 0;
     }
 
-    @Override@Deprecated
+    @Override
     public void setPrimaryColors(@ColorInt int ... colors) {
         if (mWrappedInternal != null && mWrappedInternal != this) {
             mWrappedInternal.setPrimaryColors(colors);
@@ -183,7 +189,10 @@ public abstract class InternalAbstract extends RelativeLayout implements Refresh
                     newState = newState.toFooter();
                 }
             }
-            mWrappedInternal.onStateChanged(refreshLayout, oldState, newState);
+            final OnStateChangedListener listener = mWrappedInternal;
+            if (listener != null) {
+                listener.onStateChanged(refreshLayout, oldState, newState);
+            }
         }
     }
 }
